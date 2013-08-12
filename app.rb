@@ -10,5 +10,16 @@ configure do
 end
 
 get '/' do
+  r = Redis.new
+  puts r.ping
+  r.set('foo','bar')
   erb :index
 end
+
+get '/foo' do
+  r = Redis.new
+  z = r.get('foo')
+  puts z
+  erb :var, :locals => { :foo => z }
+end
+
